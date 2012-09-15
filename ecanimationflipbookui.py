@@ -247,7 +247,7 @@ def _show_native_ui():
     
     
     
-def _show_pyqt_ui();
+def _show_pyqt_ui():
     """ Display the PyQt4 UI as the user has QT installed.
     
     Comments to come...
