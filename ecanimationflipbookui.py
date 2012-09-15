@@ -18,7 +18,8 @@ import re
 
 # Third party module imports:
 try:
-    import PyQt4
+    from PyQt4 import QtGui, QtCore
+    from ecanimationflipbookpyqt import Ui_Dialog
     _PYQT_AVAILABLE = True
 except:
     _PYQT_AVAILABLE = False
@@ -28,6 +29,7 @@ from maya import mel
 
 # Proprietary module imports:
 import ecanimationflipbook
+
 
 
 def launch_flipbook():
@@ -165,18 +167,7 @@ def _show_native_ui():
     cmds.window(window_name, title="Flipbook Animation Tool")
     cmds.columnLayout(adjustableColumn=True)
     cmds.rowColumnLayout(columnAlign=(1,"left"), nc=1, cw=[(1,480)])
-    
-    # Set the framerange:
-    #cmds.floatFieldGrp("set_framerange_field",
-    #                   numberOfFields=2,
-    #                   cw2=(10,10),
-    #                   columnAlign2=("left","left"),
-    #                   label="Start Frame",
-    #                   el="End Frame",
-    #                   pre=1,
-    #                   v1=1.0,
-    #                   v2=24.0)
-    
+
     cmds.floatFieldGrp("set_framerange_field",
                        numberOfFields=2,
                        label="Start Frame",
@@ -253,4 +244,28 @@ def _show_pyqt_ui():
     Comments to come...
     """
     print "Going to load the PyQt4 User Interface...BOOM!"
+    app = QtGui.QApplication(sys.argv)
+    launcher = MayaFlipbookPyqt()
+    launcher.show()
+    app.exec_()
+    
+
+class MayaFlipbookPyqt(QtGui.QtWidget, Ui_Dialog):
+    """
+    """
+    def __init__(self, parent=None):
+        super(MayaFlipbookPyqt, self).__init__(parent)
+        
+        self.setup_interface()
+        
+    def setup_interface():
+        """ Connecting the slots and signals for each of the
+        widgets in the UI.
+        """
+        pass
+        #self.connect(self.pb_set_framerange, QtCore.SIGNAL('clicked()'), self.set_framerange)
+        #self.connect(self.pb_select_pencil_tool, QtCore.SIGNAL('clicked()'), self.select_pencil_tool)
+        
+    
+    
     
