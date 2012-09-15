@@ -236,18 +236,20 @@ def _show_native_ui():
     cmds.setParent("..")
     cmds.showWindow(window_name) 
     
-    
-    
+
 def _show_pyqt_ui():
     """ Display the PyQt4 UI as the user has QT installed.
     
     Comments to come...
     """
-    print "Going to load the PyQt4 User Interface...BOOM!"
-    app = QtGui.QApplication(sys.argv)
-    launcher = MayaFlipbookPyqt()
-    launcher.show()
-    app.exec_()
+    try:
+        print "Going to load the PyQt4 User Interface...BOOM!"
+        app = QtGui.QApplication(sys.argv)
+        flipbook = MayaFlipbookPyqt()
+        flipbook.show()
+        app.exec_()
+    except:
+        _show_native_ui()
     
 
 class MayaFlipbookPyqt(QtGui.QtWidget, Ui_Dialog):
