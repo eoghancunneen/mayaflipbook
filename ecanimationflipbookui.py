@@ -17,6 +17,12 @@
 import re 
 
 # Third party module imports:
+try:
+    import PyQt4
+    _PYQT_AVAILABLE = True
+except:
+    _PYQT_AVAILABLE = False
+
 from maya import cmds
 from maya import mel
 
@@ -131,8 +137,18 @@ def display_previous_pages(*args):
     """
     ecanimationflipbook.display_previous_pages()    
 
-  
+
 def _show_ui():
+    """ Show the appropriate UI to the user.
+    
+    Using the variable set upon creation of t
+    """
+    if _PYQT_AVAILABLE:
+        _show_pyqt_ui()
+    else:
+        _show_native_ui()
+
+def _show_native_ui():
     """
     """
     # Set the window name:
@@ -230,4 +246,11 @@ def _show_ui():
     cmds.showWindow(window_name) 
     
     
+    
+def _show_pyqt_ui();
+    """ Display the PyQt4 UI as the user has QT installed.
+    
+    Comments to come...
+    """
+    print "Going to load the PyQt4 User Interface...BOOM!"
     
