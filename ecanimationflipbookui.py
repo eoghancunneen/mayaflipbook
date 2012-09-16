@@ -1,3 +1,4 @@
+#! /usr/bin/python
 #==============================================================================
 #
 #  Copyright (c) 2012 Eoghan Patrick Cunneen
@@ -14,21 +15,137 @@
 #===============================================================================
 
 # Primary module imports:
-import re 
+import re
+import sys
 
 # Third party module imports:
 try:
-    from PyQt4 import QtGui, QtCore
+    from PyQt4 import QtCore, QtGui
     from ecanimationflipbookpyqt import Ui_Dialog
     _PYQT_AVAILABLE = True
 except:
     _PYQT_AVAILABLE = False
 
-from maya import cmds
-from maya import mel
+try:
+    from maya import cmds
+    from maya import mel
+except ImportError:
+    print "Running application outside of maya. Maya module errors will occur."
 
 # Proprietary module imports:
-import ecanimationflipbook
+from ecanimationflipbook import Ui_Dialog
+
+
+class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
+    """
+    """
+    def __init__(self, parent=None):
+        super(MayaFlipbookPyqt, self).__init__(parent)
+        
+        self.setupUi(self)
+        self.setup_interface()
+        
+        
+    def setup_interface(self):
+        """ Connecting the slots and signals for each of the
+        widgets in the UI.
+        """
+        self.connect(self.pb_set_framerange, QtCore.SIGNAL('clicked()'), self.set_framerange)
+        self.connect(self.pb_select_pencil_tool, QtCore.SIGNAL('clicked()'), self.select_pencil_tool)
+        self.connect(self.pb_deselect_pencil_tool, QtCore.SIGNAL('clicked()'), self.deselect_pencil_tool)
+        self.connect(self.pb_set_page, QtCore.SIGNAL('clicked()'), self.set_page)
+        self.connect(self.pb_add_to_page, QtCore.SIGNAL('clicked()'), self.add_to_page)
+        self.connect(self.pb_delete_page, QtCore.SIGNAL('clicked()'), self.delete_page)
+        self.connect(self.pb_go_to_page, QtCore.SIGNAL('clicked()'), self.go_to_page)
+        self.connect(self.pb_display_next_page, QtCore.SIGNAL('clicked()'), self.display_next_page)
+        self.connect(self.pb_display_previous_page, QtCore.SIGNAL('clicked()'), self.display_previous_page)
+        self.connect(self.pb_onionskin_future_pages, QtCore.SIGNAL('clicked()'), self.onionskin_future_pages)
+        self.connect(self.pb_onionskin_past_pages, QtCore.SIGNAL('clicked()'), self.onionskin_previous_pages)
+        self.connect(self.pb_loop_selection, QtCore.SIGNAL('clicked()'), self.loop_selection)
+        self.connect(self.pb_playblast, QtCore.SIGNAL('clicked()'), self.playblast)
+        self.connect(self.pb_save, QtCore.SIGNAL('clicked()'), self.save)
+        
+        
+    def set_framerange(self):
+        """ Set the scene's framerange.
+        """
+        # TODO: Add a check to make sure that the value that's been passed
+        # is an integer value, rather than another character:
+        start_frame = int(self.lb_start_frame.text())
+        end_frame = int(self.lb_end_frame.text())
+        ecanimationflipbook.set_framerange(start_frame, end_frame)
+    
+    
+    def select_pencil_tool(self):
+        """ Select the pencil tool.
+        """
+        ecanimationflipbook.select_pencil_tool(True)
+    
+    
+    def deselect_pencil_tool(self):
+        """ Deselect the pencil tool.
+        """
+        ecanimationflipbook.select_pencil_tool(False)
+    
+    
+    def add_to_page(self):
+        """ Add the selected or none-grouped curves to a new page.
+        """
+        pass
+    
+    
+    def go_to_page(self):
+        """ Set the current frame/page of the scene.
+        """
+        pass
+    
+    
+    def display_next_page(self):
+        """ Display the next available page.
+        """
+        ecanimationflipbook.display_next_pages()
+    
+    
+    def display_previous_page(self):
+        """ Display the previous page.
+        """
+        ecanimationflipbook.display_previous_pages()
+    
+    
+    def onionskin_future_pages(self):
+        """ Onionskin future pages.
+        """
+        pass
+    
+    
+    def onionskin_previous_pages(self):
+        """ Onionskin the previous pages.
+        """
+        pass
+    
+    
+    def loop_selection(self):
+        """ Loop the 
+        """
+        # TODO: Need to make sure that the loop count and step are integer
+        # values and not other characters:
+        num_loops = int(self.le_num_loops.text())
+        step = int(self.le_step.text())
+        ecanimationflipbook.loop_selected(num_loops, step)
+    
+    
+    def playblast(self):
+        """ Set off a playblast of set framerage.
+        """
+        # This may live or die according to whichever platform we're
+        # currently playing on:
+        ecanimationflipbook.playblast_scene()
+    
+    
+    def save_scene(self):
+        """
+        """
+        ecanimationflipbook.save_scene()
 
 
 
@@ -51,9 +168,6 @@ def _setup_flipbook():
 def set_framerange(*args):
     """ Pass the values through to set the framerange for the scene.
     """
-    # floatFieldGrp -numberOfFields 2 -w 500 -columnAlign3 "left" "left" "left" -label "Start Frame" -el "End Frame" -cw2 40 40 -pre 1 -v1 $Min -v2 $Max ShotUpFrameRangeGroup;
-    # button -w 20 -label "Set Frame Range" -c "SetRange(\"ShotUpFrameRangeGroup\",\"RampFrameRangeGroup\")";
-    
     start_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v1=True)
     end_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v2=True)
     ecanimationflipbook.set_framerange(start_frame, end_frame)
@@ -68,15 +182,15 @@ def loop_selected(*args):
     
     
 def select_pencil_tool(*args):
-   """ Select the pencil tool.
-   """
-   ecanimationflipbook.select_pencil_tool(True)
+    """ Select the pencil tool.
+    """
+    ecanimationflipbook.select_pencil_tool(True)
     
     
 def deselect_pencil_tool(*args):
-   """ Select the pencil tool.
-   """
-   ecanimationflipbook.select_pencil_tool(False)
+    """ Select the pencil tool.
+    """
+    ecanimationflipbook.select_pencil_tool(False)
    
    
 def go_to_page(*args):
@@ -245,29 +359,20 @@ def _show_pyqt_ui():
     try:
         print "Going to load the PyQt4 User Interface...BOOM!"
         app = QtGui.QApplication(sys.argv)
+        print "ABOVE OK!"
         flipbook = MayaFlipbookPyqt()
         flipbook.show()
         app.exec_()
-    except:
+    except IOError as e:
+        print "I/O error({0}): {1}".format(e.errno, e.strerror)
         _show_native_ui()
     
 
-class MayaFlipbookPyqt(QtGui.QtWidget, Ui_Dialog):
-    """
-    """
-    def __init__(self, parent=None):
-        super(MayaFlipbookPyqt, self).__init__(parent)
-        
-        self.setup_interface()
-        
-    def setup_interface():
-        """ Connecting the slots and signals for each of the
-        widgets in the UI.
-        """
+  
+    
+# Entry point for launcher
+if __name__ == "__main__":
+    try:       
+        _show_pyqt_ui()
+    except:
         pass
-        #self.connect(self.pb_set_framerange, QtCore.SIGNAL('clicked()'), self.set_framerange)
-        #self.connect(self.pb_select_pencil_tool, QtCore.SIGNAL('clicked()'), self.select_pencil_tool)
-        
-    
-    
-    
