@@ -59,7 +59,7 @@ class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
         self.connect(self.pb_go_to_page, QtCore.SIGNAL('clicked()'), self.go_to_page)
         self.connect(self.pb_display_next_page, QtCore.SIGNAL('clicked()'), self.display_next_page)
         self.connect(self.pb_display_previous_page, QtCore.SIGNAL('clicked()'), self.display_previous_page)
-        self.connect(self.pb_onionskin_future_pages, QtCore.SIGNAL('clicked()'), self.onionskin_future_pages)
+        self.connect(self.pb_onionskin_future_pages, QtCore.SIGNAL('clicked()'), self.onionskin_next_pages)
         self.connect(self.pb_onionskin_past_pages, QtCore.SIGNAL('clicked()'), self.onionskin_previous_pages)
         self.connect(self.pb_loop_selection, QtCore.SIGNAL('clicked()'), self.loop_selection)
         self.connect(self.pb_playblast, QtCore.SIGNAL('clicked()'), self.playblast)
@@ -86,42 +86,61 @@ class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
         """ Deselect the pencil tool.
         """
         ecanimationflipbook.select_pencil_tool(False)
+        
+        
+    def set_to_page(self):
+        """ Add the selected or none-grouped curves to a new page.
+        """
+        ecanimationflipbook.set_page()
     
     
     def add_to_page(self):
-        """ Add the selected or none-grouped curves to a new page.
+        """ Add new curves to an existing page.
         """
-        pass
+        ecanimationflipbook.set_page()
+        
+        
+    def insert_page(self):
+        """ Set the current page.
+        """
+        ecanimationflipbook.add_selection_to_page(duplicate=True)
+        
+        
+    def delete_page(self):
+        """ Add new curves to an existing page.
+        """       
+        ecanimationflipbook.delete_page()
     
     
     def go_to_page(self):
         """ Set the current frame/page of the scene.
         """
-        pass
+        page_number = int(self.le_go_to_page.text())
+        ecanimationflipbook.go_to_page(page_number)
     
     
     def display_next_page(self):
         """ Display the next available page.
         """
-        ecanimationflipbook.display_next_pages()
+        ecanimationflipbook.display_next_page()
     
     
     def display_previous_page(self):
         """ Display the previous page.
         """
-        ecanimationflipbook.display_previous_pages()
+        ecanimationflipbook.display_previous_page()
     
     
-    def onionskin_future_pages(self):
+    def onionskin_next_pages(self):
         """ Onionskin future pages.
         """
-        pass
-    
+        ecanimationflipbook.display_next_pages()
+
     
     def onionskin_previous_pages(self):
         """ Onionskin the previous pages.
         """
-        pass
+        ecanimationflipbook.display_previous_pages()
     
     
     def loop_selection(self):
