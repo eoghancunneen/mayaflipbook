@@ -30,10 +30,13 @@ try:
     from maya import cmds
     from maya import mel
 except ImportError:
-    print "Running application outside of maya. Maya module errors will occur."
+    pass
 
 # Proprietary module imports:
 from ecanimationflipbook import Ui_Dialog
+
+
+# ------------------------------------------------------------------------------
 
 
 class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):

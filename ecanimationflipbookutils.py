@@ -13,15 +13,22 @@
 #
 #===============================================================================
 
-from maya import cmds
-from maya import mel
-        
+# Primary module imports:      
 import os
 import sys
 import re
 
-print os.getenv("MAYA_SAVE_PATH")
-print os.pwd()
+# Third party module imports:
+try:
+    from maya import cmds
+    from maya import mel
+except ImportError:
+    pass
+    
+# Proprietary module imports:
+
+
+# ------------------------------------------------------------------------------
 
 
 def save_scene():
