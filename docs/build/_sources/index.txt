@@ -3,14 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to mayaflipbook's documentation!
+Welcome to MAYAFLIPBOOK's documentation!
 ========================================
 
 Contents:
 
 .. toctree::
-   :maxdepth: 2
-
+   :maxdepth: 4
+   
+   ecanimationflipbook.rst
 
 
 Indices and tables
