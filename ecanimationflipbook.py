@@ -17,11 +17,15 @@
 import re
 import os
 import time
+import sys
 
 # Third party module imports:
-from maya import cmds
-from maya import mel
-
+try:
+    from maya import cmds
+    from maya import mel
+except ImportError:
+    pass
+    
 # Proprietary module imports:
 
 
@@ -29,14 +33,15 @@ from maya import mel
 # Private functions:
 
 def _display_page(page_number):
-    """
+    """ Set the visibility override attribute to TRUE for this page.
     """
     current_frame = cmds.currentTime(query=True)
     cmds.setAttr("page_%04d.visibilityOverride"%(page_number), 1)
     
     
 def _display_pages(page_numbers):
-    """
+    """ Set the visibility override attribute to TRUE for a list of
+    pages.
     """
     current_frame = cmds.currentTime(query=True)
     for number in page_numbers:
@@ -44,10 +49,8 @@ def _display_pages(page_numbers):
     
 
 def _internally_sort_page_numbers():
-    """ When inserting page numbers between set pages, this will sort the page
-    numbers in the currentPage enum attribute.
-    
-    Comments to come...
+    """ When inserting page numbers between set pages, this will
+    sort the page numbers in the currentPage enum attribute.
     """
     # Get the pages in the format "page_xxxx:page_xxxy:page_xxxz:etc":
     pages = cmds.addAttr("flipbook_LOC.currentPage", query=True, enumName=True)
@@ -62,11 +65,8 @@ def _internally_sort_page_numbers():
 
 
 def _update_flipbook_node(new_page, current_frame):
-    """ Updates the flipbook node with a new page in the enumerator and sets the
-    key for that frame.
-    
-    @param new_page: Page name
-    @type new_page: String
+    """ Updates the flipbook node with a new page in the enumerator
+    and sets the key for that frame.
     """
     # ...:
     cmds.expression(object=new_page,
@@ -103,43 +103,58 @@ def _get_images_directory():
 
 
 # ------------------------------------------------------------------------------
-# Public-er functions:
+# Public functions:
 
 def setup_animation_flipbook():
     """ Set the rig for the animation flipbook.
     
-    Comments to come...
+    The **flipbook_LOC** is a simple Maya locator/null with an extra
+    **pagesToDisplay** attribute which is essentially the engine
+    for the entire system. The **pagesToDisplay** attribute is
+    keyed on a frame when that frame needs to be visible.
+    
+    :returns:  None.
+    :raises: None.
     """
     if not cmds.objExists("flipbook_LOC"):
         cmds.spaceLocator(name="flipbook_LOC")
         cmds.addAttr("flipbook_LOC",
                      longName="pagesToDisplay",
                      attributeType="long")
+    
+    # Return
     return
 
 
 def set_page():
     """ Sets the current frame as a page.
     
-    Comments to come...
+    By setting the page, you're setting a key on the **pagesToDisplay**
+    attribute on the scene's **flipbook_LOC**. The objects in the scene
+    are grouped (Maya group) using the current frame to name the new page.
+    
+    If that page already exists, the new curves are added to the existing
+    page.
+    
+    A **visibilityOverride** attribute is added to the curve for additional
+    visibility options.
+    
+    :returns:  None.
+    :raises: None.
     """
     
-    # ...
+    # A list to store our selected objects:
     selected_objects = list()
     
-    # Get all of the selected objects in the scene:
-    #if cmds.ls(selection=True):
-    #    selected_objects = cmds.ls(selection=True)
-    #else:
-    # If nothing is selected, then get everything that isn't already in a page
-    # of its own:
+    # Get all of the objects in the scene:
     cmds.select(clear=True)
     cmds.select(allDagObjects=True)
         
     for object in cmds.ls(selection=True):
-        print "Object: ", object
+
         if cmds.listRelatives(object, shapes=True):
             object_shape = cmds.listRelatives(object, shapes=True)[0]
+            
             if cmds.objectType(object_shape) == "nurbsCurve":
                 selected_objects.append(object)
                     
@@ -160,8 +175,6 @@ def set_page():
         _update_flipbook_node(page_name, current_frame)
     else:
         cmds.parent(selected_objects, page_name)
-        
-    
 
     # Return
     return
@@ -171,17 +184,26 @@ def go_to_page(page_number):
     """ Go to a particular page in the animation regardless of it being keyed or
     not.
     
-    Comments to come...
+    :param page_number: The page/frame we want to set the scene to.
+    :type page_number: int.
+    :returns:  None.
+    :raises: None.
     """
     # Update the timeline to the specific frame number passed as a parameter:
     cmds.currentTime(page_number, edit=True, update=True)
+    
+    # Return
+    return
 
  
 def add_selection_to_page(duplicate=False):
     """ Takes the current selection of objects and moves them to a new or
     existing page.
     
-    Comments to come
+    :param duplicate: Whether we want to move the curves or duplicate and move the duplicate.
+    :type duplicate: boolean.
+    :returns:  None.
+    :raises: None.
     """
     # Get the current selected objects:
     selected_objects = cmds.ls(selection=True)
@@ -207,6 +229,9 @@ def add_selection_to_page(duplicate=False):
     # Create the page:
     set_page()
     
+    # Return
+    return
+    
 
 def display_previous_page():
     """ Sets the visibility attribute of the previous page to 1.
@@ -214,6 +239,9 @@ def display_previous_page():
     This just sets the attribute, but doesn't key it. This means that the 
     animator can view the illustration, without worrying about the visibility of
     it moving forward. It will be reset as soon as the frame is updated.
+    
+    :returns:  None.
+    :raises: None.
     """
     # Get the current frame:
     current_frame = cmds.currentTime(query=True)
@@ -238,6 +266,9 @@ def display_previous_page():
     # Display that frame:
     _display_page(previous_key)
     
+    # Return
+    return
+    
 
 def display_next_page():
     """Sets the visibility attribute of the next page to 1.
@@ -245,6 +276,9 @@ def display_next_page():
     This just sets the attribute, but doesn't key it. This means that the 
     animator can view the illustration, without worrying about the visibility of
     it moving forward. It will be reset as soon as the frame is updated.
+    
+    :returns:  None.
+    :raises: None.
     """
     # Get the current frame:
     current_frame = cmds.currentTime(query=True)
@@ -267,13 +301,19 @@ def display_next_page():
     next_key = keys[key_index+1]
     
     # Display that frame:
-    print "Next key: %d"%(next_key)
-    print keys
     _display_page(next_key)
+    
+    # Return
+    return
     
     
 def display_previous_pages():
-    """
+    """ Displays all past pages in an onion skinning presentation
+    of pages.
+
+    :todo: Apply a shader that colours the curves so that they gradually get lighter the further that page is away fromthe current page.
+    :returns: None.
+    :raises: None.
     """
     # Get the current frame:
     current_frame = cmds.currentTime(query=True)
@@ -298,9 +338,17 @@ def display_previous_pages():
     # Display that frame:
     _display_pages(keys[:key_index])
     
+    # Return
+    return
+
 
 def display_next_pages():
-    """
+    """ Displays all future pages in an onion skinning presentation
+    of pages.
+
+    :todo: Apply a shader that colours the curves so that they gradually get lighter the further that page is away fromthe current page.
+    :returns: None.
+    :raises: None.
     """
     # Get the current frame:
     current_frame = cmds.currentTime(query=True)
@@ -324,19 +372,32 @@ def display_next_pages():
     # Display that frame:
     _display_pages(keys[key_index+1:])
 
+    # Return
+    return
+
 
 def set_framerange(start_time, end_time):
     """ Set the start and end range for playback and animation.
+    
+    :param start_time: The page to display.
+    :param end_time: The number of frames between the loop.
+    :type start_time: int.
+    :type end_time: int.
+    :returns:  None.
+    :raises: None.
     """
     # Set the animation and the min/max playback values:
-    cmds.playbackOptions(ast=start_time,
-                         aet=end_time,
-                         min=start_time,
-                         max=end_time)
+    cmds.playbackOptions(ast=start_time, aet=end_time,
+                         min=start_time, max=end_time)
+    # Return
+    return
 
 
 def save_scene():
-    """
+    """ Save the scene to a set location.
+    
+    :todo: Add a configuration (json) file that lets the user save their file to a particular location.
+    :todo: Add a function in the utils folder that time stamps or versions the maya file.
     """
     # Get the current saved scene files:
     saved_scene_files = os.listdir(_get_scenes_directory())
@@ -346,11 +407,17 @@ def save_scene():
         
     cmds.file(rename=filename)
     cmds.file(save=True, type='mayaAscii')
+    
+    # Return
+    return
 
 
 def playblast_scene():
     """ Playblast the current scene using the min and max playback values as the
     start and end value for the playblast.
+    
+    :todo: Add a configuration (json) file that lets the user save their file to a particular location.
+    :todo: Add a function in the utils folder that time stamps or versions the maya file.
     """
     # Get the start and end frames of the animation scene:
     start_frame = cmds.playbackOptions(min=True, query=True)
@@ -368,10 +435,18 @@ def playblast_scene():
     # Playblast the scene:
     cmds.playblast(filename=location, fmt="qt", offScreen=True)
     
+    # Return
+    return
+    
     
 def select_pencil_tool(select=True):
     """ Select the pencil tool or revert to the selection tool based on the 
     parameter passed.
+    
+    :param select: Whether to select (True) or deselect (False).
+    :type select: boolean.
+    :returns:  None.
+    :raises: None.
     """
     if select:
         mel.eval("PencilCurveTool")
@@ -380,11 +455,17 @@ def select_pencil_tool(select=True):
         g_select = mel.eval("$tmp_value = $gSelect")
         cmds.setToolTo(g_select)
         
+    # Return
+    return
+        
         
 def delete_page():
     """ Delete an existing page.
     
-    Comments to come...
+    Cuts the key from the flipbook_LOC so that it is no longer set.
+    
+    :returns:  None.
+    :raises: None.
     """
     # Get the current frame that we're on:
     current_frame = cmds.currentTime(query=True)
@@ -413,7 +494,20 @@ def loop_selection(num_loops, step=1):
     """ Loop over selected pages num_loop times.
     
     With the pages selected in the maya scene, loop over the pages num_loop
-    times with step amount of frames between each loop. 
+    times with step amount of frames between each loop.
+    
+    :param num_loops: The page to display.
+    :param step: The number of frames between the loop.
+    :type num_loops: int.
+    :type step: int.
+    :returns:  List.
+    :raises: None.
+    
+    .. note::
+
+       There is a Maya Expression declared in this function as a string.
+       This could be removed to another file and use something like Jinja
+       to work with it.
     """
     # If there are pages selected:
     pages = cmds.ls(selection=True)
@@ -427,8 +521,6 @@ def loop_selection(num_loops, step=1):
         page_array = ""
         
         # Set the expression now:
-        
-        
         for index, page in enumerate(page_vals):
             page_name = "page_%04d"%(page)
             expr_name = "page_%04d_visbility_EXP"%(page)
@@ -457,9 +549,7 @@ int $page = %(page)d;
 int $current_keyed_frame = flipbook_LOC.pagesToDisplay;
 %(page_name)s.visibility = ($page==$current_keyed_frame)||(visibilityOverride)||$visible;
 """  %{"values":','.join(map(str, page_loop[index::len(page_vals)])), "end_values":','.join(map(str, page_loop[index+1::len(page_vals)])),"page":page, "page_name":page_name}
-                    
-            print exp
-                 
+                                     
             cmds.expression(object=page_name,
                             name=expr_name, 
                             string= exp,
@@ -470,13 +560,15 @@ int $current_keyed_frame = flipbook_LOC.pagesToDisplay;
     page_name = "page_%04d"%(page_vals[-1]+1)
     set_empty_page()
     
+    # Return the loop list:
     return page_loop
   
   
 def set_empty_page():
     """Sets the current frame as an empty page.
     
-    Comments to come...
+    :returns: None.
+    :raises: None.
     """
     # Then group the objects into their own page. The page number is dictated
     # by the current frame:
@@ -494,4 +586,7 @@ def set_empty_page():
         # Set the key for this page and insert the page number into the attribute
         # on the flipbook node:
         _update_flipbook_node(page_name, current_frame)
+        
+    # Return
+    return
 
