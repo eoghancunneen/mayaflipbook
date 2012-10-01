@@ -20,7 +20,9 @@ import sys
 
 # Third party module imports:
 try:
-    from PyQt4 import QtCore, QtGui
+    from PyQt4 import QtCore
+    from PyQt4 import QtGui
+    
     from ecanimationflipbookpyqt import Ui_Dialog
     _PYQT_AVAILABLE = True
 except:
@@ -33,7 +35,7 @@ except ImportError:
     pass
 
 # Proprietary module imports:
-from ecanimationflipbook import Ui_Dialog
+import  ecanimationflipbook
 
 
 # ------------------------------------------------------------------------------
@@ -46,7 +48,7 @@ class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
         super(MayaFlipbookPyqt, self).__init__(parent)
         
         self.setupUi(self)
-        self.setup_interface()
+        #self.setup_interface()
         
         
     def setup_interface(self):
@@ -381,10 +383,13 @@ def _show_pyqt_ui():
     try:
         print "Going to load the PyQt4 User Interface...BOOM!"
         app = QtGui.QApplication(sys.argv)
-        print "ABOVE OK!"
+	print "0"
         flipbook = MayaFlipbookPyqt()
+	print "1"
         flipbook.show()
+	print "2"
         app.exec_()
+	print "3"
     except IOError as e:
         print "I/O error({0}): {1}".format(e.errno, e.strerror)
         _show_native_ui()
