@@ -44,6 +44,7 @@ import  ecanimationflipbook
 class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     """
     """
+    
     def __init__(self, parent=None):
         super(MayaFlipbookPyqt, self).__init__(parent)
         
@@ -112,7 +113,7 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
         
         
     def delete_page(self):
-        """ Add new curves to an existing page.
+        """ Delete the current page.
         """       
         ecanimationflipbook.delete_page()
     
@@ -149,7 +150,10 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     
     
     def loop_selection(self):
-        """ Loop the 
+        """ Loop the selected page.
+        
+        Loop over the selected pages N times with a gap of M frames
+        between eack loop. N and M are values taken from the UI.
         """
         # TODO: Need to make sure that the loop count and step are integer
         # values and not other characters:
@@ -159,7 +163,12 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     
     
     def playblast(self):
-        """ Set off a playblast of set framerage.
+        """ Playblast the current scene.
+        
+        Playblast the current scene, saving the output in the selected
+        format and location designated in a JSON configuration file.
+    
+        :todo: Set up the JSON file to configure playblasts.
         """
         # This may live or die according to whichever platform we're
         # currently playing on:
@@ -167,7 +176,7 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     
     
     def save_scene(self):
-        """
+        """ Save the current scene.
         """
         ecanimationflipbook.save_scene()
 
@@ -190,7 +199,10 @@ def _setup_flipbook():
 
 
 def set_framerange(*args):
-    """ Pass the values through to set the framerange for the scene.
+    """ Set the scene's framerange.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     start_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v1=True)
     end_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v2=True)
@@ -198,7 +210,13 @@ def set_framerange(*args):
     
 
 def loop_selected(*args):
-    """ Pass the values through to set the framerange for the scene.
+    """ Loop the selected page.
+        
+    Loop over the selected pages N times with a gap of M frames
+    between eack loop. N and M are values taken from the UI.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     num_loops = cmds.floatFieldGrp("set_loop_field", query=True, v1=True)
     step = cmds.floatFieldGrp("set_loop_field", query=True, v2=True)
@@ -207,73 +225,113 @@ def loop_selected(*args):
     
 def select_pencil_tool(*args):
     """ Select the pencil tool.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.select_pencil_tool(True)
     
     
 def deselect_pencil_tool(*args):
-    """ Select the pencil tool.
+    """ Deselect the pencil tool.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.select_pencil_tool(False)
    
    
 def go_to_page(*args):
     """ Change the frame to the one specified.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     page_number = cmds.floatFieldGrp("go_to_page_field", v1=True, query=True)
     ecanimationflipbook.go_to_page(page_number)
 
 
 def set_page(*args):
-    """ Set the current page.
+    """ Add the selected or none-grouped curves to a new page.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.set_page()
     
 
 def insert_page(*args):
     """ Set the current page.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.add_selection_to_page(duplicate=True)
     
     
 def delete_page(*args):
-    """ Set the current page.
+    """ Delete the current page.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.delete_page()
     
     
 def save_scene(*args):
     """ Set the current page.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.save_scene()
     
     
 def playblast_scene(*args):
-    """ Set the current page.
+    """ Playblast the current scene.
+    
+    Playblast the current scene, saving the output in the selected
+    format and location designated in a JSON configuration file.
+    
+    :todo: Set up the JSON file to configure playblasts.
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.playblast_scene()
 
 
 def display_next_page(*args):
-    """ Set the current page.
+    """ Display the next available page..
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.display_next_page()
     
 
 def display_previous_page(*args):
-    """ Set the current page.
+    """ Display previous page.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.display_previous_page()
     
     
 def display_next_pages(*args):
-    """ Set the current page.
+    """ Onionskin future pages.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.display_next_pages()
     
 
 def display_previous_pages(*args):
-    """ Set the current page.
+    """ Onionskin the previous pages
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     ecanimationflipbook.display_previous_pages()    
 
@@ -287,9 +345,13 @@ def _show_ui():
         _show_pyqt_ui()
     else:
         _show_native_ui()
+        
 
 def _show_native_ui():
-    """
+    """ This builds the actual native Maya Inteface and displays it.
+    
+    .. note::
+        This is utilised by the native MEL UI.
     """
     # Set the window name:
     window_name = "ecanimation_flipbook"
@@ -378,27 +440,13 @@ def _show_native_ui():
 def _show_pyqt_ui():
     """ Display the PyQt4 UI as the user has QT installed.
     
-    Comments to come...
+    :raises: IOError
     """
     try:
-        print "Going to load the PyQt4 User Interface...BOOM!"
         global flipbook_dialog
-        print "0"
         flipbook_dialog = MayaFlipbookPyqt()
-        print "1"
         flipbook_dialog.show()
-        print "2"
 
     except IOError as e:
         print "I/O error({0}): {1}".format(e.errno, e.strerror)
         _show_native_ui()
-    
-
-  
-    
-# Entry point for launcher
-if __name__ == "__main__":
-    try:       
-        _show_pyqt_ui()
-    except:
-        pass

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &mdash; mayaflipbook 0.0.1 documentation</title>
+    <title>Documentation for the mayaflipbook UI module &mdash; mayaflipbook 0.0.1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -27,8 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="top" title="mayaflipbook 0.0.1 documentation" href="index.html" />
-    <link rel="next" title="&lt;no title&gt;" href="ecanimationflipbookpyqt.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="ecanimationflipbookutils.html" /> 
+    <link rel="prev" title="Documentation for the Code" href="ecanimationflipbook.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +37,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="ecanimationflipbookpyqt.html" title="&lt;no title&gt;"
-             accesskey="N">next</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
-          <a href="ecanimationflipbookutils.html" title="&lt;no title&gt;"
+          <a href="ecanimationflipbook.html" title="Documentation for the Code"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">mayaflipbook 0.0.1 documentation</a> &raquo;</li> 
       </ul>
@@ -52,19 +51,308 @@
         <div class="bodywrapper">
           <div class="body">
             
-  
+  <div class="section" id="documentation-for-the-mayaflipbook-ui-module">
+<h1>Documentation for the mayaflipbook UI module<a class="headerlink" href="#documentation-for-the-mayaflipbook-ui-module" title="Permalink to this headline">¶</a></h1>
+<p>In this module we check to see if the user has the PyQt4 module loaded and
+available. If it is available, we create a PyQt derived UI which is far nicer
+to use both aesthetically, but also in terms of maintainability. If the user
+does not have the PyQt module loaded, the script falls back on a default native
+Maya/MEL user interface. The user interface allows the user to operate each of
+the commands necessary to run the Flipbook tool and to control its engine.</p>
+<div class="section" id="some-details-to-add-here">
+<h2>Some details to add here...<a class="headerlink" href="#some-details-to-add-here" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt">
+<em class="property">class </em><tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">MayaFlipbookPyqt</tt><big>(</big><em>parent=None</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.add_to_page">
+<tt class="descname">add_to_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.add_to_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.add_to_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add new curves to an existing page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.delete_page">
+<tt class="descname">delete_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.delete_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.delete_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the current page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.deselect_pencil_tool">
+<tt class="descname">deselect_pencil_tool</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.deselect_pencil_tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.deselect_pencil_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deselect the pencil tool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.display_next_page">
+<tt class="descname">display_next_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.display_next_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.display_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the next available page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.display_previous_page">
+<tt class="descname">display_previous_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.display_previous_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.display_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the previous page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.go_to_page">
+<tt class="descname">go_to_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.go_to_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.go_to_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current frame/page of the scene.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.insert_page">
+<tt class="descname">insert_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.insert_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.insert_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.loop_selection">
+<tt class="descname">loop_selection</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.loop_selection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.loop_selection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loop the selected page.</p>
+<p>Loop over the selected pages N times with a gap of M frames
+between eack loop. N and M are values taken from the UI.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.onionskin_next_pages">
+<tt class="descname">onionskin_next_pages</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.onionskin_next_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.onionskin_next_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Onionskin future pages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.onionskin_previous_pages">
+<tt class="descname">onionskin_previous_pages</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.onionskin_previous_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.onionskin_previous_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Onionskin the previous pages.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.playblast">
+<tt class="descname">playblast</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.playblast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.playblast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Playblast the current scene.</p>
+<p>Playblast the current scene, saving the output in the selected
+format and location designated in a JSON configuration file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Todo :</th><td class="field-body">Set up the JSON file to configure playblasts.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.save_scene">
+<tt class="descname">save_scene</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.save_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.save_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the current scene.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.select_pencil_tool">
+<tt class="descname">select_pencil_tool</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.select_pencil_tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.select_pencil_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the pencil tool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.set_framerange">
+<tt class="descname">set_framerange</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.set_framerange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.set_framerange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scene&#8217;s framerange.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.set_page">
+<tt class="descname">set_page</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.set_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.set_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the selected or none-grouped curves to a new page.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.setup_interface">
+<tt class="descname">setup_interface</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#MayaFlipbookPyqt.setup_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.MayaFlipbookPyqt.setup_interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connecting the slots and signals for each of the
+widgets in the UI.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.delete_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">delete_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#delete_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.delete_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the current page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.deselect_pencil_tool">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">deselect_pencil_tool</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#deselect_pencil_tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.deselect_pencil_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deselect the pencil tool.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.display_next_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">display_next_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#display_next_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.display_next_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the next available page..</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.display_next_pages">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">display_next_pages</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#display_next_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.display_next_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Onionskin future pages.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.display_previous_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">display_previous_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#display_previous_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.display_previous_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display previous page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.display_previous_pages">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">display_previous_pages</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#display_previous_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.display_previous_pages" title="Permalink to this definition">¶</a></dt>
+<dd><p>Onionskin the previous pages</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.go_to_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">go_to_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#go_to_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.go_to_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change the frame to the one specified.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.insert_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">insert_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#insert_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.insert_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.launch_flipbook">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">launch_flipbook</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#launch_flipbook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.launch_flipbook" title="Permalink to this definition">¶</a></dt>
+<dd><p>This launches the UI and sets up the flipbook node.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.loop_selected">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">loop_selected</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#loop_selected"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.loop_selected" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loop the selected page.</p>
+<p>Loop over the selected pages N times with a gap of M frames
+between eack loop. N and M are values taken from the UI.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.playblast_scene">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">playblast_scene</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#playblast_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.playblast_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Playblast the current scene.</p>
+<p>Playblast the current scene, saving the output in the selected
+format and location designated in a JSON configuration file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Todo :</th><td class="field-body">Set up the JSON file to configure playblasts.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.save_scene">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">save_scene</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#save_scene"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.save_scene" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the current page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.select_pencil_tool">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">select_pencil_tool</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#select_pencil_tool"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.select_pencil_tool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select the pencil tool.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.set_framerange">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">set_framerange</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#set_framerange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.set_framerange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the scene&#8217;s framerange.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="mayaflipbook.ecanimationflipbookui.set_page">
+<tt class="descclassname">mayaflipbook.ecanimationflipbookui.</tt><tt class="descname">set_page</tt><big>(</big><em>*args</em><big>)</big><a class="reference internal" href="_modules/mayaflipbook/ecanimationflipbookui.html#set_page"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mayaflipbook.ecanimationflipbookui.set_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the selected or none-grouped curves to a new page.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is utilised by the native MEL UI.</p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Documentation for the mayaflipbook UI module</a><ul>
+<li><a class="reference internal" href="#some-details-to-add-here">Some details to add here...</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
-  <p class="topless"><a href="ecanimationflipbookutils.html"
-                        title="previous chapter">&lt;no title&gt;</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="ecanimationflipbookpyqt.html"
-                        title="next chapter">&lt;no title&gt;</a></p>
+  <p class="topless"><a href="ecanimationflipbook.html"
+                        title="previous chapter">Documentation for the Code</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/ecanimationflipbookui.txt"
@@ -94,10 +382,10 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="ecanimationflipbookpyqt.html" title="&lt;no title&gt;"
-             >next</a> |</li>
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
-          <a href="ecanimationflipbookutils.html" title="&lt;no title&gt;"
+          <a href="ecanimationflipbook.html" title="Documentation for the Code"
              >previous</a> |</li>
         <li><a href="index.html">mayaflipbook 0.0.1 documentation</a> &raquo;</li> 
       </ul>

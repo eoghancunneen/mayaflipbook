@@ -12,7 +12,7 @@ Contents:
    :maxdepth: 4
    
    ecanimationflipbook.rst
-
+   ecanimationflipbookui.rst
 
 Indices and tables
 ==================
