@@ -39,18 +39,6 @@ import  ecanimationflipbook
 
 
 # ------------------------------------------------------------------------------
-#class GravityTechalyoutCharDialog(QtGui.QDialog, gravityTechlayoutExport_charDialogUI.Ui_Dialog):
-#    
-#    """
-#    """
-#    
-#    def __init__(self, parent=None):
-#        """
-#        """
-#        super(GravityTechalyoutCharDialog, self).__init__(parent)
-#        self.setupUi(self)
-#
-#
 
 
 class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
