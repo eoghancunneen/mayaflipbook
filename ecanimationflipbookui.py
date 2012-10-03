@@ -39,16 +39,28 @@ import  ecanimationflipbook
 
 
 # ------------------------------------------------------------------------------
+#class GravityTechalyoutCharDialog(QtGui.QDialog, gravityTechlayoutExport_charDialogUI.Ui_Dialog):
+#    
+#    """
+#    """
+#    
+#    def __init__(self, parent=None):
+#        """
+#        """
+#        super(GravityTechalyoutCharDialog, self).__init__(parent)
+#        self.setupUi(self)
+#
+#
 
 
-class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
+class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     """
     """
     def __init__(self, parent=None):
         super(MayaFlipbookPyqt, self).__init__(parent)
         
         self.setupUi(self)
-        #self.setup_interface()
+        self.setup_interface()
         
         
     def setup_interface(self):
@@ -68,7 +80,7 @@ class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
         self.connect(self.pb_onionskin_past_pages, QtCore.SIGNAL('clicked()'), self.onionskin_previous_pages)
         self.connect(self.pb_loop_selection, QtCore.SIGNAL('clicked()'), self.loop_selection)
         self.connect(self.pb_playblast, QtCore.SIGNAL('clicked()'), self.playblast)
-        self.connect(self.pb_save, QtCore.SIGNAL('clicked()'), self.save)
+        self.connect(self.pb_save, QtCore.SIGNAL('clicked()'), self.save_scene)
         
         
     def set_framerange(self):
@@ -93,7 +105,7 @@ class MayaFlipbookPyqt(QtGui.QWidget, Ui_Dialog):
         ecanimationflipbook.select_pencil_tool(False)
         
         
-    def set_to_page(self):
+    def set_page(self):
         """ Add the selected or none-grouped curves to a new page.
         """
         ecanimationflipbook.set_page()
@@ -382,14 +394,13 @@ def _show_pyqt_ui():
     """
     try:
         print "Going to load the PyQt4 User Interface...BOOM!"
-        app = QtGui.QApplication(sys.argv)
-	print "0"
-        flipbook = MayaFlipbookPyqt()
-	print "1"
-        flipbook.show()
-	print "2"
-        app.exec_()
-	print "3"
+        global flipbook_dialog
+        print "0"
+        flipbook_dialog = MayaFlipbookPyqt()
+        print "1"
+        flipbook_dialog.show()
+        print "2"
+
     except IOError as e:
         print "I/O error({0}): {1}".format(e.errno, e.strerror)
         _show_native_ui()
