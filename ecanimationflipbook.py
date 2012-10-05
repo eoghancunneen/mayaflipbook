@@ -494,7 +494,7 @@ def loop_selection(num_loops, step=1):
     """ Loop over selected pages num_loop times.
     
     With the pages selected in the maya scene, loop over the pages num_loop
-    times with step amount of frames between each loop.
+    times with step amount of frames between each loop. And some...
     
     :param num_loops: The page to display.
     :param step: The number of frames between the loop.
