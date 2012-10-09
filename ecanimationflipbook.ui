@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Maya Flipbook</string>
+   <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_6">
    <item row="0" column="0">
@@ -41,7 +41,20 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="le_start_frame"/>
+           <widget class="QSpinBox" name="sb_start_frame">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label_3">
@@ -54,7 +67,20 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="le_end_frame"/>
+           <widget class="QSpinBox" name="sb_end_frame">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lb_end_frame">
@@ -174,7 +200,23 @@
              </spacer>
             </item>
             <item>
-             <widget class="QLineEdit" name="le_go_to_page"/>
+             <widget class="QSpinBox" name="sb_go_to_page">
+              <property name="frame">
+               <bool>true</bool>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+              </property>
+              <property name="buttonSymbols">
+               <enum>QAbstractSpinBox::NoButtons</enum>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>99999</number>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -333,15 +375,12 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>le_start_frame</tabstop>
-  <tabstop>le_end_frame</tabstop>
   <tabstop>pb_set_framerange</tabstop>
   <tabstop>pb_select_pencil_tool</tabstop>
   <tabstop>pb_deselect_pencil_tool</tabstop>
   <tabstop>pb_set_page</tabstop>
   <tabstop>pb_add_to_page</tabstop>
   <tabstop>pb_delete_page</tabstop>
-  <tabstop>le_go_to_page</tabstop>
   <tabstop>pb_go_to_page</tabstop>
   <tabstop>pb_display_next_page</tabstop>
   <tabstop>pb_display_previous_page</tabstop>
