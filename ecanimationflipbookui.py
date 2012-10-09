@@ -22,8 +22,12 @@ import sys
 try:
     from PyQt4 import QtCore
     from PyQt4 import QtGui
+    from PyQt4 import uic
     
-    from ecanimationflipbookpyqt import Ui_Dialog
+    # Loading the UI file dynamically rather than compiling it with
+    # pyuic4 into a separate python file:
+    form_class, base_class = uic.loadUiType(os.path.join(os.path.dirname(__file__),
+                                                         'ecanimationflipbook.ui'))
     _PYQT_AVAILABLE = True
 except:
     _PYQT_AVAILABLE = False
@@ -41,7 +45,8 @@ import  ecanimationflipbook
 # ------------------------------------------------------------------------------
 
 
-class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
+class MayaFlipbookPyqt(form_class, base_class):
+    
     """
     """
     
@@ -56,20 +61,21 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
         """ Connecting the slots and signals for each of the
         widgets in the UI.
         """
-        self.connect(self.pb_set_framerange, QtCore.SIGNAL('clicked()'), self.set_framerange)
-        self.connect(self.pb_select_pencil_tool, QtCore.SIGNAL('clicked()'), self.select_pencil_tool)
-        self.connect(self.pb_deselect_pencil_tool, QtCore.SIGNAL('clicked()'), self.deselect_pencil_tool)
-        self.connect(self.pb_set_page, QtCore.SIGNAL('clicked()'), self.set_page)
-        self.connect(self.pb_add_to_page, QtCore.SIGNAL('clicked()'), self.add_to_page)
-        self.connect(self.pb_delete_page, QtCore.SIGNAL('clicked()'), self.delete_page)
-        self.connect(self.pb_go_to_page, QtCore.SIGNAL('clicked()'), self.go_to_page)
-        self.connect(self.pb_display_next_page, QtCore.SIGNAL('clicked()'), self.display_next_page)
-        self.connect(self.pb_display_previous_page, QtCore.SIGNAL('clicked()'), self.display_previous_page)
-        self.connect(self.pb_onionskin_future_pages, QtCore.SIGNAL('clicked()'), self.onionskin_next_pages)
-        self.connect(self.pb_onionskin_past_pages, QtCore.SIGNAL('clicked()'), self.onionskin_previous_pages)
-        self.connect(self.pb_loop_selection, QtCore.SIGNAL('clicked()'), self.loop_selection)
-        self.connect(self.pb_playblast, QtCore.SIGNAL('clicked()'), self.playblast)
-        self.connect(self.pb_save, QtCore.SIGNAL('clicked()'), self.save_scene)
+        self.pb_set_framerange.clicked.connect(self.set_framerange)
+        self.pb_select_pencil_tool.clicked.connect(self.select_pencil_tool)        
+        self.pb_deselect_pencil_tool.clicked.connect(self.deselect_pencil_tool)
+        self.pb_set_page.clicked.connect(self.set_page)        
+        self.pb_add_to_page.clicked.connect(self.add_to_page)        
+        self.pb_delete_page.clicked.connect(self.delete_page)        
+        self.pb_go_to_page.clicked.connect(self.go_to_page)
+        self.pb_display_next_page.clicked.connect(self.display_next_page)        
+        self.pb_display_previous_page.clicked.connect(self.display_previous_page)        
+        self.pb_onionskin_future_pages.clicked.connect(self.onionskin_next_pages)        
+        self.pb_onionskin_past_pages.clicked.connect(self.onionskin_previous_pages)        
+        self.pb_loop_selection.clicked.connect(self.loop_selection)        
+        self.pb_playblast.clicked.connect(self.playblast)        
+        self.pb_save.clicked.connect(self.save_scene)
+        
         
         
     def set_framerange(self):
