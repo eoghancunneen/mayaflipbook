@@ -378,10 +378,7 @@ def show_ui():
     
     Using the variable set upon creation of t
     """
-    if _PYQT_AVAILABLE:
-        show_pyqt_ui()
-    else:
-        show_native_ui()
+    show_pyqt_ui() if _PYQT_AVAILABLE else show_native_ui()
         
 
 def show_native_ui():

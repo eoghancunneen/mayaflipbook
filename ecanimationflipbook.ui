@@ -310,7 +310,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="le_num_loops"/>
+           <widget class="QSpinBox" name="sb_num_loops">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="lb_step">
@@ -320,7 +330,17 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="le_step"/>
+           <widget class="QSpinBox" name="sb_step">
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::NoButtons</enum>
+            </property>
+            <property name="maximum">
+             <number>99999</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -386,8 +406,6 @@
   <tabstop>pb_display_previous_page</tabstop>
   <tabstop>pb_onionskin_future_pages</tabstop>
   <tabstop>pb_onionskin_past_pages</tabstop>
-  <tabstop>le_num_loops</tabstop>
-  <tabstop>le_step</tabstop>
   <tabstop>pb_loop_selection</tabstop>
   <tabstop>pb_playblast</tabstop>
   <tabstop>pb_save</tabstop>

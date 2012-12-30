@@ -1,4 +1,4 @@
-#==============================================================================
+#===============================================================================
 #
 #  Copyright (c) 2012 Eoghan Patrick Cunneen
 #  All rights reserved.
@@ -34,6 +34,9 @@ except ImportError:
 
 def _display_page(page_number):
     """ Set the visibility override attribute to TRUE for this page.
+
+    :param page_number: The number of the page we want to display.
+    :type page_number: `int()` 
     """
     current_frame = cmds.currentTime(query=True)
     cmds.setAttr("page_%04d.visibilityOverride"%(page_number), 1)
@@ -42,6 +45,9 @@ def _display_page(page_number):
 def _display_pages(page_numbers):
     """ Set the visibility override attribute to TRUE for a list of
     pages.
+
+    :param page_numbers: A list of the numbers of the page we want to display.
+    :type page_numbers: `list()`
     """
     current_frame = cmds.currentTime(query=True)
     for number in page_numbers:
@@ -51,6 +57,8 @@ def _display_pages(page_numbers):
 def _internally_sort_page_numbers():
     """ When inserting page numbers between set pages, this will
     sort the page numbers in the currentPage enum attribute.
+
+    :returns: `str()` delimited by colons.
     """
     # Get the pages in the format "page_xxxx:page_xxxy:page_xxxz:etc":
     pages = cmds.addAttr("flipbook_LOC.currentPage", query=True, enumName=True)
@@ -67,11 +75,17 @@ def _internally_sort_page_numbers():
 def _update_flipbook_node(new_page, current_frame):
     """ Updates the flipbook node with a new page in the enumerator
     and sets the key for that frame.
+
+    :param new_page: 
+    :type new_page:
+    :returns: None
     """
     # ...:
     cmds.expression(object=new_page,
                     name="%s_visbility_EXP"%(new_page), 
-                    string="int $page = %d;\nint $current_keyed_frame = flipbook_LOC.pagesToDisplay;\n%s.visibility = ($page==$current_keyed_frame)||(visibilityOverride);"%(current_frame, new_page),
+                    string="int $page = %d;\n"
+                    "int $current_keyed_frame = flipbook_LOC.pagesToDisplay;\n"
+                    "%s.visibility = ($page==$current_keyed_frame)||(visibilityOverride);"%(current_frame, new_page),
                     alwaysEvaluate=True)
     
     # We will also be adding another attribute with just integer values. This 
@@ -80,27 +94,10 @@ def _update_flipbook_node(new_page, current_frame):
                      value=current_frame,
                      time=current_frame,
                      outTangentType="step")
-    
+
     # Return:
     return
-
-def _get_project_path():
-    """ Returns the current maya project workspace.
-    """
-    return cmds.workspace(query=True, rootDirectory=True)
     
-
-def _get_scenes_directory():
-    """ Returns the path to where the scenes are saved to.
-    """
-    return os.path.join(_get_project_path(), "scenes")
-
-
-def _get_images_directory():
-    """ Returns the path to where the scenes are saved to.
-    """
-    return os.path.join(_get_project_path(), "images")
-
 
 # ------------------------------------------------------------------------------
 # Public functions:
@@ -112,15 +109,13 @@ def setup_animation_flipbook():
     **pagesToDisplay** attribute which is essentially the engine
     for the entire system. The **pagesToDisplay** attribute is
     keyed on a frame when that frame needs to be visible.
-    
+
     :returns:  None.
-    :raises: None.
+    :raises: None.    
     """
     if not cmds.objExists("flipbook_LOC"):
         cmds.spaceLocator(name="flipbook_LOC")
-        cmds.addAttr("flipbook_LOC",
-                     longName="pagesToDisplay",
-                     attributeType="long")
+        cmds.addAttr("flipbook_LOC",longName="pagesToDisplay", attributeType="long")
     
     # Return
     return

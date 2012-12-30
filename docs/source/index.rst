@@ -9,7 +9,7 @@ Welcome to MAYAFLIPBOOK's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
    
    ecanimationflipbook.rst
    ecanimationflipbookui.rst
