@@ -1,0 +1,32 @@
+//===============================================================================
+//
+//  Copyright (c) 2012-2013 Eoghan Patrick Cunneen
+//  All rights reserved.
+//
+//  This file contains confidential and proprietary source code, belonging to
+//  Eoghan Patrick Cunneen. Its contents may not be disclosed to third parties,
+//  copied or duplicated in any form, in whole or in part, without prior
+//  permission.
+//
+//===============================================================================
+
+// This frame is in a loop:
+int $visible_frames[] = {%(values)s}; 
+int $end_frames[] = {%(end_values)s}; 
+int $frame;
+int $visible = 0;
+
+int $index;                
+for($index=0; $index<size($visible_frames); $index++)
+{
+    if((frame>=$visible_frames[$index])&&(frame<$end_frames[$index]))
+    {
+        $visible = 1;
+    }
+}                   
+
+int $page = %(page)d;
+int $current_keyed_frame = flipbook_LOC.pagesToDisplay;
+%(page_name)s.visibility = ($page==$current_keyed_frame)||(visibilityOverride)||$visible;
+"""  %{"values":','.join(map(str, page_loop[index::len(page_vals)])), "end_values":','.join(map(str, page_loop[index+1::len(page_vals)])),"page":page, "page_name":page_name}
+                     
