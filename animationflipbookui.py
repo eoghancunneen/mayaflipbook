@@ -9,10 +9,9 @@
 #  copied or duplicated in any form, in whole or in part, without prior
 #  permission.
 #
-#  Summary: 
-#           
-#
 #===============================================================================
+""" Module docstring to come...
+"""
 
 # Primary module imports:
 import re
@@ -21,13 +20,7 @@ import sys
 # Third party module imports:
 try:
     from PyQt4 import QtCore
-    from PyQt4 import QtGui
-    from PyQt4 import uic
-    
-    # Loading the UI file dynamically rather than compiling it with
-    # pyuic4 into a separate python file:
-    form_class, base_class = uic.loadUiType(os.path.join(os.path.dirname(__file__),
-                                                         'ecanimationflipbook.ui'))
+    from PyQt4 import QtGui    
     _PYQT_AVAILABLE = True
 except:
     _PYQT_AVAILABLE = False
@@ -39,20 +32,13 @@ except ImportError:
     pass
 
 # Proprietary module imports:
-import  ecanimationflipbook
+import animationflipbook
+from animationflipbookpyqt import Ui_Dialog
 
 
-# ------------------------------------------------------------------------------
-
-
-class MayaFlipbookPyqt(form_class, base_class):
-    
-    """
-    """
-    
+class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
     def __init__(self, parent=None):
         super(MayaFlipbookPyqt, self).__init__(parent)
-        
         self.setupUi(self)
         self.setup_interface()
         self.setup_interface_values()
@@ -105,74 +91,74 @@ class MayaFlipbookPyqt(form_class, base_class):
         """ Set the scene's framerange.
         :deprecated: Widget call backs will resolve this.
         """
-        ecanimationflipbook.set_framerange(self.sb_start_frame.value(),
+        animationflipbook.set_framerange(self.sb_start_frame.value(),
                                            self.sb_end_frame.value())
     
     
     def select_pencil_tool(self):
         """ Select the pencil tool.
         """
-        ecanimationflipbook.select_pencil_tool(True)
+        animationflipbook.select_pencil_tool(True)
     
     
     def deselect_pencil_tool(self):
         """ Deselect the pencil tool.
         """
-        ecanimationflipbook.select_pencil_tool(False)
+        animationflipbook.select_pencil_tool(False)
         
         
     def set_page(self):
         """ Add the selected or none-grouped curves to a new page.
         """
-        ecanimationflipbook.set_page()
+        animationflipbook.set_page()
     
     
     def add_to_page(self):
         """ Add new curves to an existing page.
         """
-        ecanimationflipbook.set_page()
+        animationflipbook.set_page()
         
         
     def insert_page(self):
         """ Set the current page.
         """
-        ecanimationflipbook.add_selection_to_page(duplicate=True)
+        animationflipbook.add_selection_to_page(duplicate=True)
         
         
     def delete_page(self):
         """ Delete the current page.
         """       
-        ecanimationflipbook.delete_page()
+        animationflipbook.delete_page()
     
     
     def go_to_page(self):
         """ Set the current frame/page of the scene.
         """
-        ecanimationflipbook.go_to_page(self.sb_go_to_page.value())
+        animationflipbook.go_to_page(self.sb_go_to_page.value())
     
     
     def display_next_page(self):
         """ Display the next available page.
         """
-        ecanimationflipbook.display_next_page()
+        animationflipbook.display_next_page()
     
     
     def display_previous_page(self):
         """ Display the previous page.
         """
-        ecanimationflipbook.display_previous_page()
+        animationflipbook.display_previous_page()
     
     
     def onionskin_next_pages(self):
         """ Onionskin future pages.
         """
-        ecanimationflipbook.display_next_pages()
+        animationflipbook.display_next_pages()
 
     
     def onionskin_previous_pages(self):
         """ Onionskin the previous pages.
         """
-        ecanimationflipbook.display_previous_pages()
+        animationflipbook.display_previous_pages()
     
     
     def loop_selection(self):
@@ -181,7 +167,7 @@ class MayaFlipbookPyqt(form_class, base_class):
         Loop over the selected pages N times with a gap of M frames
         between eack loop. N and M are values taken from the UI.
         """
-        ecanimationflipbook.loop_selected(self.sb_num_loops.value(),
+        animationflipbook.loop_selected(self.sb_num_loops.value(),
                                           self.sb_step.value())
     
     
@@ -196,7 +182,7 @@ class MayaFlipbookPyqt(form_class, base_class):
         """
         # This may live or die according to whichever platform we're
         # currently playing on:
-        ecanimationflipbook.playblast_scene()
+        animationflipbook.playblast_scene()
     
     
     def save_scene(self):
@@ -204,7 +190,7 @@ class MayaFlipbookPyqt(form_class, base_class):
         
         :deprecated: Create a new Maya save/load module.
         """
-        ecanimationflipbook.save_scene()
+        animationflipbook.save_scene()
 
 
 
@@ -221,7 +207,7 @@ def launch_flipbook():
 def setup_flipbook():
     """ Creates the flipbook node if one doesn't exist already.
     """
-    ecanimationflipbook.setup_animation_flipbook()
+    animationflipbook.setup_animation_flipbook()
 
 
 def set_framerange(*args):
@@ -233,7 +219,7 @@ def set_framerange(*args):
     """
     start_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v1=True)
     end_frame = cmds.floatFieldGrp("set_framerange_field", query=True, v2=True)
-    ecanimationflipbook.set_framerange(start_frame, end_frame)
+    animationflipbook.set_framerange(start_frame, end_frame)
     
 
 def loop_selected(*args):
@@ -248,7 +234,7 @@ def loop_selected(*args):
     """
     num_loops = cmds.floatFieldGrp("set_loop_field", query=True, v1=True)
     step = cmds.floatFieldGrp("set_loop_field", query=True, v2=True)
-    ecanimationflipbook.loop_selection(int(num_loops), int(step))
+    animationflipbook.loop_selection(int(num_loops), int(step))
     
     
 def select_pencil_tool(*args):
@@ -258,7 +244,7 @@ def select_pencil_tool(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.select_pencil_tool(True)
+    animationflipbook.select_pencil_tool(True)
     
     
 def deselect_pencil_tool(*args):
@@ -268,7 +254,7 @@ def deselect_pencil_tool(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.select_pencil_tool(False)
+    animationflipbook.select_pencil_tool(False)
    
    
 def go_to_page(*args):
@@ -279,7 +265,7 @@ def go_to_page(*args):
         This is utilised by the native MEL UI.
     """
     page_number = cmds.floatFieldGrp("go_to_page_field", v1=True, query=True)
-    ecanimationflipbook.go_to_page(page_number)
+    animationflipbook.go_to_page(page_number)
 
 
 def set_page(*args):
@@ -289,7 +275,7 @@ def set_page(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.set_page()
+    animationflipbook.set_page()
     
 
 def insert_page(*args):
@@ -299,7 +285,7 @@ def insert_page(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.add_selection_to_page(duplicate=True)
+    animationflipbook.add_selection_to_page(duplicate=True)
     
     
 def delete_page(*args):
@@ -309,7 +295,7 @@ def delete_page(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.delete_page()
+    animationflipbook.delete_page()
     
     
 def save_scene(*args):
@@ -318,7 +304,7 @@ def save_scene(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.save_scene()
+    animationflipbook.save_scene()
     
     
 def playblast_scene(*args):
@@ -331,7 +317,7 @@ def playblast_scene(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.playblast_scene()
+    animationflipbook.playblast_scene()
 
 
 def display_next_page(*args):
@@ -340,7 +326,7 @@ def display_next_page(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.display_next_page()
+    animationflipbook.display_next_page()
     
 
 def display_previous_page(*args):
@@ -350,7 +336,7 @@ def display_previous_page(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.display_previous_page()
+    animationflipbook.display_previous_page()
     
     
 def display_next_pages(*args):
@@ -360,7 +346,7 @@ def display_next_pages(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.display_next_pages()
+    animationflipbook.display_next_pages()
     
 
 def display_previous_pages(*args):
@@ -370,7 +356,7 @@ def display_previous_pages(*args):
     .. note::
         This is utilised by the native MEL UI.
     """
-    ecanimationflipbook.display_previous_pages()    
+    animationflipbook.display_previous_pages()    
 
 
 def show_ui():
@@ -477,10 +463,15 @@ def show_pyqt_ui():
     :raises: IOError
     """
     try:
-        global flipbook_dialog
+        app = QtGui.QApplication(sys.argv)
         flipbook_dialog = MayaFlipbookPyqt()
         flipbook_dialog.show()
+        sys.exit(app.exec_())
 
     except IOError as e:
         print "I/O error({0}): {1}".format(e.errno, e.strerror)
         _show_native_ui()
+
+
+if __name__ == "__main__":
+    show_pyqt_ui()

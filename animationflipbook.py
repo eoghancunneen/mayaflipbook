@@ -8,10 +8,9 @@
 #  copied or duplicated in any form, in whole or in part, without prior
 #  permission.
 #
-#  Summary: 
-#           
-#
 #===============================================================================
+""" Module docstring to come...
+"""
 
 # Primary module imports:
 import re
@@ -27,10 +26,6 @@ except ImportError:
     pass
     
 # Proprietary module imports:
-
-
-# ------------------------------------------------------------------------------
-# Private functions:
 
 def _display_page(page_number):
     """ Set the visibility override attribute to TRUE for this page.
@@ -82,11 +77,12 @@ def _update_flipbook_node(new_page, current_frame):
     """
     # ...:
     cmds.expression(object=new_page,
-                    name="%s_visbility_EXP"%(new_page), 
-                    string="int $page = %d;\n"
-                    "int $current_keyed_frame = flipbook_LOC.pagesToDisplay;\n"
-                    "%s.visibility = ($page==$current_keyed_frame)||(visibilityOverride);"%(current_frame, new_page),
-                    alwaysEvaluate=True)
+            name="%s_visbility_EXP"%(new_page), 
+            string="int $page = %d;\n"
+            "int $current_keyed_frame = flipbook_LOC.pagesToDisplay;\n"
+            "%s.visibility = ($page==$current_keyed_frame)||(visibilityOverride);"
+            %(current_frame, new_page),
+            alwaysEvaluate=True)
     
     # We will also be adding another attribute with just integer values. This 
     # will be set here at this point as well.
@@ -98,9 +94,6 @@ def _update_flipbook_node(new_page, current_frame):
     # Return:
     return
     
-
-# ------------------------------------------------------------------------------
-# Public functions:
 
 def setup_animation_flipbook():
     """ Set the rig for the animation flipbook.
@@ -306,7 +299,9 @@ def display_previous_pages():
     """ Displays all past pages in an onion skinning presentation
     of pages.
 
-    :todo: Apply a shader that colours the curves so that they gradually get lighter the further that page is away fromthe current page.
+    :todo: Apply a shader that colours the curves so that they
+           gradually get lighter the further that page is away
+           fromthe current page.
     :returns: None.
     :raises: None.
     """
@@ -341,7 +336,9 @@ def display_next_pages():
     """ Displays all future pages in an onion skinning presentation
     of pages.
 
-    :todo: Apply a shader that colours the curves so that they gradually get lighter the further that page is away fromthe current page.
+    :todo: Apply a shader that colours the curves so that they
+           gradually get lighter the further that page is away
+           fromthe current page.
     :returns: None.
     :raises: None.
     """
@@ -391,8 +388,10 @@ def set_framerange(start_time, end_time):
 def save_scene():
     """ Save the scene to a set location.
     
-    :todo: Add a configuration (json) file that lets the user save their file to a particular location.
-    :todo: Add a function in the utils folder that time stamps or versions the maya file.
+    :todo: Add a configuration (json) file that lets the user
+           save their file to a particular location.
+    :todo: Add a function in the utils folder that time stamps
+           or versions the maya file.
     """
     # Get the current saved scene files:
     saved_scene_files = os.listdir(_get_scenes_directory())
@@ -408,11 +407,13 @@ def save_scene():
 
 
 def playblast_scene():
-    """ Playblast the current scene using the min and max playback values as the
-    start and end value for the playblast.
+    """ Playblast the current scene using the min and max playback
+    values as the start and end value for the playblast.
     
-    :todo: Add a configuration (json) file that lets the user save their file to a particular location.
-    :todo: Add a function in the utils folder that time stamps or versions the maya file.
+    :todo: Add a configuration (json) file that lets the user save
+           their file to a particular location.
+    :todo: Add a function in the utils folder that time stamps or
+           versions the maya file.
     """
     # Get the start and end frames of the animation scene:
     start_frame = cmds.playbackOptions(min=True, query=True)
@@ -435,8 +436,8 @@ def playblast_scene():
     
     
 def select_pencil_tool(select=True):
-    """ Select the pencil tool or revert to the selection tool based on the 
-    parameter passed.
+    """ Select the pencil tool or revert to the selection tool based
+    on the parameter passed.
     
     :param select: Whether to select (True) or deselect (False).
     :type select: boolean.
@@ -523,8 +524,8 @@ def loop_selection(num_loops, step=1):
             if cmds.objExists(expr_name):
                 cmds.delete(expr_name)
                 
+            # :TODO: Move this to an external file for prettiness:
             exp   = """
-            
 // This frame is in a loop...
 int $visible_frames[] = {%(values)s}; 
 int $end_frames[] = {%(end_values)s}; 
