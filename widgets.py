@@ -70,27 +70,74 @@ class PageOperationsWidget(QtGui.QGroupBox):
         self.pb_set_page = QtGui.QPushButton('Set Page')
         self.pb_add_to_page = QtGui.QPushButton('Add to Page')
         self.pb_delete_page = QtGui.QPushButton('Delete Page')
-        self.pb_go_to_page = QtGui.QPushButton('Go to Page')
         self.pb_display_next_page = QtGui.QPushButton('Display Next Page')
         self.pb_display_previous_page = QtGui.QPushButton('Display Previous Page')
         self.pb_os_future_pages = QtGui.QPushButton('Onionskin Future Pages')
         self.pb_os_past_pages = QtGui.QPushButton('Onionskin Past Pages')
-
-
-        
+        self.lb_page_picker = QtGui.QLabel('Go to Page')
+        self.sb_page_picker = QtGui.QSpinBox()
+        self.pb_page_picker = QtGui.QPushButton('Go')
         self._setup_ui()
 
     def _setup_ui(self):
-        pass
+        layout = QtGui.QVBoxLayout()
+        picker_layout = QtGui.QHBoxLayout()
+        picker_form_layout = QtGui.QFormLayout()
+        line1 = line2 = QtGui.QFrame()
+        line1.setFrameShape(QtGui.QFrame.HLine)
+        line2.setFrameShape(QtGui.QFrame.HLine)
+        picker_form_layout.addRow(self.lb_page_picker, self.sb_page_picker)
+        picker_layout.addLayout(picker_form_layout)
+        picker_layout.addWidget(self.pb_page_picker)
+        layout.addWidget(self.pb_set_page)
+        layout.addWidget(self.pb_add_to_page)
+        layout.addWidget(self.pb_delete_page)
+        layout.addWidget(line1)
+        layout.addLayout(picker_layout)
+        layout.addWidget(line2)
+        layout.addWidget(self.pb_display_next_page)
+        layout.addWidget(self.pb_display_previous_page)
+        layout.addWidget(self.pb_os_future_pages)
+        layout.addWidget(self.pb_os_past_pages)
+        self.setLayout(layout)
+        self.setTitle('Page Operations')
 
 
+class LoopOperationsWidget(QtGui.QGroupBox):
+    """ A widget to let the user create a loop over a number of pages"""
+    def __init__(self, parent=None):
+       super(LoopOperationsWidget, self).__init__(parent)
+       self.lb_num_loops = QtGui.QLabel('# Loops')
+       self.lb_steps = QtGui.QLabel('Step')
+       self.sb_num_loops = QtGui.QSpinBox()
+       self.sb_steps = QtGui.QSpinBox()
+       self.pb_execute_loop = QtGui.QPushButton('Loop Selection')
+       self._setup_ui()
+
+    def _setup_ui(self):
+        layout = QtGui.QVBoxLayout()
+        horizontal_layout = QtGui.QHBoxLayout()
+        horizontal_layout.addWidget(self.lb_num_loops)
+        horizontal_layout.addWidget(self.sb_num_loops)
+        horizontal_layout.addStretch()
+        horizontal_layout.addWidget(self.lb_steps)
+        horizontal_layout.addWidget(self.sb_steps)
+        layout.addLayout(horizontal_layout)
+        layout.addWidget(self.pb_execute_loop)
+        self.setLayout(layout)
+        self.setTitle('Loop Options')
 
 
+class AdditionaOptionsWidget(QtGui.QGroupBox):
+    """ A widget that contains extra, miscellaneous features"""
+    def __init__(self, parent=None):
+        super(AdditionaOptionsWidget, self).__init__(parent)
+        self.pb_playblast = QtGui.QPushButton('Playblast')
+        self.pb_save_scene = QtGui.QPushButton('Save Scene')
+        self._setup_ui()
 
-
-
-
-
-
-
-
+    def _setup_ui(self):
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(self.pb_playblast)
+        layout.addWidget(self.pb_save_scene)
+        self.setLayout(layout)
