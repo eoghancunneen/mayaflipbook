@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/env python
 #==============================================================================
 #
 #  Copyright (c) 2012 Eoghan Patrick Cunneen
@@ -16,11 +16,12 @@
 # Primary module imports:
 import re
 import sys
+import logging
 
 # Third party module imports:
 try:
-    from PyQt4 import QtCore
-    from PyQt4 import QtGui    
+    from PyQt4 import QtGui
+    import widgets
     _PYQT_AVAILABLE = True
 except:
     _PYQT_AVAILABLE = False
@@ -28,47 +29,77 @@ except:
 try:
     from maya import cmds
     from maya import mel
-except ImportError:
-    pass
+except ImportError as e:
+    logging.info('Running outside of Maya mode. Full feature set will '
+        'not work. Use this for testing front end.\n'
+        '{0}'.format(e))
 
 # Proprietary module imports:
 import animationflipbook
-from animationflipbookpyqt import Ui_Dialog
 
 
-class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
+class MayaFlipBookFacade(QtGui.QDialog):
     def __init__(self, parent=None):
-        super(MayaFlipbookPyqt, self).__init__(parent)
-        self.setupUi(self)
-        self.setup_interface()
-        self.setup_interface_values()
+        super(MayaFlipBookFacade, self).__init__(parent)
+        self.framerange_widget = widgets.FrameRangeWidget()
+        self.pencil_control_widget = widgets.PencilControlWidget()
+        self.page_operation_widget = widgets.PageOperationsWidget()
+        self.loop_operations_widget = widgets.LoopOperationsWidget()
+        self.extra_options = widgets.AdditionaOptionsWidget()
+        self._setup_ui()
+        self._setup_connections()
+
+    def _setup_ui(self):
+        """ Construct the UI."""
+        layout = QtGui.QVBoxLayout()
+        layout.addWidget(self.framerange_widget)
+        layout.addWidget(self.pencil_control_widget)
+        layout.addWidget(self.page_operation_widget)
+        layout.addWidget(self.loop_operations_widget)
+        layout.addWidget(self.extra_options)
+        self.setLayout(layout)
         
-        
-    def setup_interface(self):
-        """ Connecting the slots and signals for each of the
-        widgets in the UI.
+    def _setup_connections(self):
+        """ Connecting the slots and signals for each of the widgets
+        in the UI.
         """
-        self.pb_set_framerange.clicked.connect(self.set_framerange)
-        self.pb_select_pencil_tool.clicked.connect(self.select_pencil_tool)        
-        self.pb_deselect_pencil_tool.clicked.connect(self.deselect_pencil_tool)
-        self.pb_set_page.clicked.connect(self.set_page)        
-        self.pb_add_to_page.clicked.connect(self.add_to_page)        
-        self.pb_delete_page.clicked.connect(self.delete_page)        
-        self.pb_go_to_page.clicked.connect(self.go_to_page)
-        self.pb_display_next_page.clicked.connect(self.display_next_page)        
-        self.pb_display_previous_page.clicked.connect(self.display_previous_page)        
-        self.pb_onionskin_future_pages.clicked.connect(self.onionskin_next_pages)        
-        self.pb_onionskin_past_pages.clicked.connect(self.onionskin_previous_pages)        
-        self.pb_loop_selection.clicked.connect(self.loop_selection)        
-        self.pb_playblast.clicked.connect(self.playblast)        
-        self.pb_save.clicked.connect(self.save_scene)
-        
+        self.framerange_widget.pb_setframerange.clicked.connect(
+            self.set_framerange)
+        self.pencil_control_widget.pb_select_pencil.clicked.connect(
+            self.select_pencil_tool)        
+        self.pencil_control_widget.pb_deselect_pencil.clicked.connect(
+            self.deselect_pencil_tool)
+        self.page_operation_widget.pb_set_page.clicked.connect(
+            self.set_page)        
+        self.page_operation_widget.pb_add_to_page.clicked.connect(
+            self.add_to_page)        
+        self.page_operation_widget.pb_delete_page.clicked.connect(
+            self.delete_page)        
+        self.page_operation_widget.pb_page_picker.clicked.connect(
+            self.go_to_page)
+        self.page_operation_widget.pb_display_next_page.clicked.connect(
+            self.display_next_page)        
+        self.page_operation_widget.pb_display_previous_page.clicked.connect(
+            self.display_previous_page)        
+        self.page_operation_widget.pb_os_future_pages.clicked.connect(
+            self.onionskin_next_pages)        
+        self.page_operation_widget.pb_os_past_pages.clicked.connect(
+            self.onionskin_previous_pages)        
+        self.loop_operations_widget.pb_execute_loop.clicked.connect(
+            self.loop_selection)        
+        self.extra_options.pb_playblast.clicked.connect(self.playblast)        
+        self.extra_options.pb_save_scene.clicked.connect(self.save_scene)
+
+        # :TODO:
         # Callbacks to fully implement and test. This will allow us
         # to remove buttons altogether and save on some screen real
         # estate:
-        self.sb_start_frame.valueChanged.connect(self.update_start_frame)
-        self.sb_end_frame.valueChanged.connect(self.update_start_frame)
-        self.sb_go_to_page.valueChanged.connect(self.go_to_page)
+        #self.framerange_widget.sb_startframe.valueChanged.connect(
+        #    self.update_start_frame)
+        #self.framerange_widget.sb_endframe.valueChanged.connect(
+        #    self.update_start_frame)
+        #self.framerange_widget.sb_go_to_page.valueChanged.connect(
+        #    self.go_to_page)
         
         
     def setup_interface_values(self):
@@ -85,82 +116,69 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
         
         # Set the
         self.le_go_to_page.setText()
-        
-        
+
     def set_framerange(self):
         """ Set the scene's framerange.
         :deprecated: Widget call backs will resolve this.
         """
         animationflipbook.set_framerange(self.sb_start_frame.value(),
                                            self.sb_end_frame.value())
-    
-    
+
     def select_pencil_tool(self):
         """ Select the pencil tool.
         """
         animationflipbook.select_pencil_tool(True)
-    
-    
+
     def deselect_pencil_tool(self):
         """ Deselect the pencil tool.
         """
         animationflipbook.select_pencil_tool(False)
-        
-        
+
     def set_page(self):
         """ Add the selected or none-grouped curves to a new page.
         """
         animationflipbook.set_page()
-    
-    
+
     def add_to_page(self):
         """ Add new curves to an existing page.
         """
         animationflipbook.set_page()
-        
-        
+
     def insert_page(self):
         """ Set the current page.
         """
         animationflipbook.add_selection_to_page(duplicate=True)
-        
-        
+
     def delete_page(self):
         """ Delete the current page.
         """       
         animationflipbook.delete_page()
-    
-    
+
     def go_to_page(self):
         """ Set the current frame/page of the scene.
         """
         animationflipbook.go_to_page(self.sb_go_to_page.value())
-    
-    
+
     def display_next_page(self):
         """ Display the next available page.
         """
         animationflipbook.display_next_page()
-    
-    
+
     def display_previous_page(self):
         """ Display the previous page.
         """
         animationflipbook.display_previous_page()
-    
-    
+
     def onionskin_next_pages(self):
         """ Onionskin future pages.
         """
         animationflipbook.display_next_pages()
 
-    
     def onionskin_previous_pages(self):
         """ Onionskin the previous pages.
         """
         animationflipbook.display_previous_pages()
-    
-    
+
     def loop_selection(self):
         """ Loop the selected page.
         
@@ -169,8 +187,7 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
         """
         animationflipbook.loop_selected(self.sb_num_loops.value(),
                                           self.sb_step.value())
-    
-    
+
     def playblast(self):
         """ Playblast the current scene.
         
@@ -183,15 +200,13 @@ class MayaFlipbookPyqt(QtGui.QDialog, Ui_Dialog):
         # This may live or die according to whichever platform we're
         # currently playing on:
         animationflipbook.playblast_scene()
-    
-    
+
     def save_scene(self):
         """ Save the current scene.
         
         :deprecated: Create a new Maya save/load module.
         """
         animationflipbook.save_scene()
-
 
 
 def launch_flipbook():
@@ -464,7 +479,7 @@ def show_pyqt_ui():
     """
     try:
         app = QtGui.QApplication(sys.argv)
-        flipbook_dialog = MayaFlipbookPyqt()
+        flipbook_dialog = MayaFlipBookFacade()
         flipbook_dialog.show()
         sys.exit(app.exec_())
 
