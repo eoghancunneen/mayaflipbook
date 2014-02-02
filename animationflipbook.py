@@ -27,6 +27,8 @@ except ImportError:
     
 # Proprietary module imports:
 
+TEMPLATE_DIR = os.path.join(os.path.dirname(__file__), 'templates')
+print TEMPLATE_DIR
 def _display_page(page_number):
     """ Set the visibility override attribute to TRUE for this page.
 
@@ -489,8 +491,9 @@ def delete_page():
 def loop_selection(num_loops, step=1):
     """ Loop over selected pages num_loop times.
     
-    With the pages selected in the maya scene, loop over the pages num_loop
-    times with step amount of frames between each loop. And some...
+    With the pages selected in the maya scene, loop over the pages
+    num_loop times with step amount of frames between each loop.
+    And some...
     
     :param num_loops: The page to display.
     :param step: The number of frames between the loop.
@@ -524,42 +527,27 @@ def loop_selection(num_loops, step=1):
             if cmds.objExists(expr_name):
                 cmds.delete(expr_name)
                 
-            # :TODO: Move this to an external file for prettiness:
-            exp   = """
-// This frame is in a loop...
-int $visible_frames[] = {%(values)s}; 
-int $end_frames[] = {%(end_values)s}; 
-int $frame;
-int $visible = 0;
-
-int $index;                
-for($index=0; $index<size($visible_frames); $index++)
-{
-    if((frame>=$visible_frames[$index])&&(frame<$end_frames[$index]))
-    {
-        $visible = 1;
-    }
-}                   
-
-int $page = %(page)d;
-int $current_keyed_frame = flipbook_LOC.pagesToDisplay;
-%(page_name)s.visibility = ($page==$current_keyed_frame)||(visibilityOverride)||$visible;
-"""  %{"values":','.join(map(str, page_loop[index::len(page_vals)])), "end_values":','.join(map(str, page_loop[index+1::len(page_vals)])),"page":page, "page_name":page_name}
-                                     
+            # Reads the expression from the ./templates folder and fills
+            # in the values before setting the expression on the curves
+            # for that given page:
+            exp = open(os.path.join(TEMPLATE_DIR, 'flipbookexpression.mel'), 'r').read()
+            exp = exp % {'values': ','.join(map(str, page_loop[index::len(page_vals)])),
+                         'end_values': ','.join(map(str, page_loop[index+1::len(page_vals)])),
+                         'page': page,
+                         'page_name': page_name}
             cmds.expression(object=page_name,
                             name=expr_name, 
                             string= exp,
                             alwaysEvaluate=True)  
-                
-                
+
     go_to_page(page_vals[-1]+1)
     page_name = "page_%04d"%(page_vals[-1]+1)
     set_empty_page()
-    
+
     # Return the loop list:
     return page_loop
-  
-  
+
+
 def set_empty_page():
     """Sets the current frame as an empty page.
     
