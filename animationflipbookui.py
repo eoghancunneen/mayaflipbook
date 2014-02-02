@@ -65,7 +65,7 @@ class MayaFlipBookFacade(QtGui.QDialog):
         """ Connecting the slots and signals for each of the widgets
         in the UI.
         """
-        self.framerange_widget.pb_setframerange.clicked.connect(
+        self.framerange_widget.pb_set_framerange.clicked.connect(
             self.set_framerange)
         self.pencil_control_widget.pb_select_pencil.clicked.connect(
             self.select_pencil_tool)        
@@ -187,8 +187,8 @@ class MayaFlipBookFacade(QtGui.QDialog):
         Loop over the selected pages N times with a gap of M frames
         between eack loop. N and M are values taken from the UI.
         """
-        animationflipbook.loop_selected(self.sb_num_loops.value(),
-                                          self.sb_step.value())
+        animationflipbook.loop_selection(self.loop_operations_widget.sb_num_loops.value(),
+            self.loop_operations_widget.sb_steps.value())
 
     def playblast(self):
         """ Playblast the current scene.
@@ -430,12 +430,12 @@ def show_native_ui():
     
     # Go to page:
     go_to_page_field = cmds.floatFieldGrp("go_to_page_field",
-                                          numberOfFields=1,
-                                          columnWidth=(10,10),
-                                          columnAlign2=("left","left"),
-                                          label="Go to frame",
-                                          pre=1,
-                                          v1=1.0)
+        numberOfFields=1,
+        columnWidth=(10,10),
+        columnAlign2=("left","left"),
+        label="Go to frame",
+        pre=1,
+        v1=1.0)
     
     cmds.button(w=20, label="Go to page", command=lambda *args: go_to_page(go_to_page_field))
     cmds.text(label="")
