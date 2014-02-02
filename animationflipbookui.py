@@ -10,7 +10,8 @@
 #  permission.
 #
 #===============================================================================
-""" Module docstring to come...
+""" This is the construction of the UI that the user will use within maya.
+...
 """
 
 # Primary module imports:
@@ -30,7 +31,8 @@ try:
     from maya import cmds
     from maya import mel
 except ImportError as e:
-    logging.info('Running outside of Maya mode. Full feature set will '
+    logging.info(
+        'Running outside of Maya mode. Full feature set will '
         'not work. Use this for testing front end.\n'
         '{0}'.format(e))
 
