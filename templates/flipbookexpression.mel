@@ -1,4 +1,4 @@
-//===============================================================================
+//==============================================================================
 //
 //  Copyright (c) 2012-2013 Eoghan Patrick Cunneen
 //  All rights reserved.
@@ -8,7 +8,13 @@
 //  copied or duplicated in any form, in whole or in part, without prior
 //  permission.
 //
-//===============================================================================
+//==============================================================================
+
+/*
+This is the expression that will be used to set the visibility attributes
+on each of the curves for a particular page/frame. It is used to calculate
+whether a curve.
+*/
 
 // This frame is in a loop:
 int $visible_frames[] = {%(values)s}; 
@@ -28,5 +34,3 @@ for($index=0; $index<size($visible_frames); $index++)
 int $page = %(page)d;
 int $current_keyed_frame = flipbook_LOC.pagesToDisplay;
 %(page_name)s.visibility = ($page==$current_keyed_frame)||(visibilityOverride)||$visible;
-"""  %{"values":','.join(map(str, page_loop[index::len(page_vals)])), "end_values":','.join(map(str, page_loop[index+1::len(page_vals)])),"page":page, "page_name":page_name}
-                     
